@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add good
+{% endblock %}
+
+{% block nav_left %}
+{% include 'shop/navleft.html' %}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<form id="usrform" class="smtextbox" method="POST">
+    <h1 class="text-center h3 mb-3 font-weight-normal">Add Merchandises</h1>
+    <div class="form-row">
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control" placeholder="Name" required autofocus name='name'>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="number" min="0" class="form-control" placeholder="Price" required name='value'>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-sm-6">
+            <input type="number" min="0" class="form-control" placeholder="Amounts（Optional）" name='amount'>
+        </div>
+        <div class="col-12 col-sm-6">
+            <select class="form-control" name='type' id="type">
+                {% for category in categories %}
+                <option>{{category['name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <textarea name="description" id="description" form="usrform"></textarea>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Apply and Add</button>
+</form>
+<script>
+    var simplemde = new SimpleMDE();
+</script>
+{% endblock %}

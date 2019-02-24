@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block nav_left %}
+{% include 'shop/navleft.html' %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .card-custom {
+        max-width: 256px;
+        min-width: 256px;
+    }
+</style>
+
+<div class="row smrow mt-5 justify-content-center">
+    <div class="card card-custom mx-2 mb-3">
+        <div class="card-header">
+            <p class="card-text">Cart</p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a class="text-primary btn btn-light" href="{{url_for('shop.index')}}">More</a>
+            </h5>
+            <p class="card-text text-secondary">Shop More</p>
+            <hr />
+            <h5 class="card-title">
+                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#ModalCenter">
+                    Delete
+                </button>
+            </h5>
+            <p class="card-text text-secondary">Delete All Items In Your Cart</p>
+
+            <hr />
+            <h5 class="card-title">
+
+                <form action="{{url_for('shop.calccart')}}" method="post">
+                    <button class="text-primary btn btn-light" type="submit">Proceed to Checkout</button>
+                </form>
+            </h5>
+            <p class="card-text text-secondary">Checkout All Items in Your Cart</p>
+            <hr />
+            <h5 class="card-title">
+                <a class="text-dark">Subtotal Price: ￥{% if amount %}{{amount}}{%else%}0{%endif%}</a>
+            </h5>
+            <hr />
+        </div>
+    </div>
+    {% for i in goods %}
+    <div class="card card-custom mx-2 mb-3">
+        <img src="/shop/getpic/{{i['id']}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            {%if i['isOnsale']|int==1%}
+            <h5 class="card-title">{{i['name']}} x {{i['amount']}}</h5>
+            <p class="card-text">￥{{i['value']*i['amount']}}</p>
+            {%else%}
+            <h5 class="card-title"><del>{{i['name']}} x {{i['amount']}}</del></h5>
+            <p class="card-text text-danger">Goods are off the shelves</p>
+            <p class="card-text">￥<del>{{i['value']*i['amount']}}</del></p>
+            {%endif%}
+        </div>
+        <div class="card-footer">
+            <div class="btn-group" role="group">
+                <form class="btn smrmpadding" action="/shop/minusone/{{i['id']}}" method="post">
+                    {%if i['isOnsale']|int==1%}
+                    <button class="btn btn-primary" type="submit">-</button>
+                    {%else%}
+                    <button class="btn btn-primary" type="submit" disabled>-</button>
+                    {%endif%}
+                </form>
+                <form class="btn smrmpadding" action="/shop/buy/{{i['id']}}" method="post">
+                    {%if i['isOnsale']|int==1%}
+                    <button class="btn btn-primary" type="submit">+</button>
+                    {%else%}
+                    <button class="btn btn-primary" type="submit" disabled>+</button>
+                    {%endif%}
+                </form>
+            </div>
+            <form class="btn smrmpadding" action="/shop/delete/{{i['id']}}" method="post">
+                <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+<!-- Modal -->
+    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ARE YOU SURE you want to delete them all?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{url_for('shop.emptycart')}}" method="post">
+                        <button class="text btn btn-danger" type="submit">Delete</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

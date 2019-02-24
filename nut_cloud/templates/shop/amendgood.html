@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Amend good
+{% endblock %}
+
+{% block nav_left %}
+{% include 'shop/navleft.html' %}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<form id="usrform" class="smtextbox" method="POST">
+    <h1 class="text-center h3 mb-3 font-weight-normal">Amend Goods</h1>
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Name" required autofocus name='name'
+                value="{{good['name']}}">
+        </div>
+        <div class="col">
+            <input type="number" min="0" class="form-control" placeholder="Price" required name='value'
+                value="{{good['value']}}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <input type="number" min="0" class="form-control" placeholder="Total In Stock（Optional）" name='amount' value="{{good['amount']}}">
+        </div>
+        <div class="col">
+            <select class="form-control" name='type' id="type">
+                {% for category in categories %}
+                {% if category['name'] == good['type'] %}
+                <option selected>{{category['name']}}</option>
+                {% else %}
+                <option>{{category['name']}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <textarea name="description" id="description" form="usrform">{{good['description']}}</textarea>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Apply</button>
+</form>
+<script>
+    var simplemde = new SimpleMDE();
+</script>
+{% endblock %}

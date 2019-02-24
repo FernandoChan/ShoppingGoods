@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detail
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{url_for('static',filename='sima.css')}}" />
+{% endblock %}
+
+{% block nav_left %}
+{% include 'shop/navleft.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div class="left-panel">
+        <ul>
+            <li>
+                <h2>Description</h2>
+                <br />
+                {{html|safe}}
+
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+                <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+                <h2 class="text-left h3 mb-3 font-weight-normal">Customer Review</h2>
+                <form id="usrform" class="smtextbox" method="POST">
+                    <!--required?-->
+                     <textarea name="review" id="description" form="usrform"></textarea>
+                </form>
+
+            </li>
+        </ul>
+    </div>
+    <div class="right-panel">
+        <div class="inside-panel">
+            <div class="card" style="width: 18rem;">
+                <img src="/shop/getpic/{{good['id']}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{good['name']}}</h5>
+                </div>
+
+                <div class="card-body">
+                    <form class="btn smrmpadding" action="/shop/buy/{{good['id']}}" method="post">
+                        {% if good['amount']!='' and good['amount']|int == 0 %}
+                        <button class="btn btn-primary" type="submit" disabled>Sold Out!</button>
+                        {% else %}
+                        <button class="btn btn-primary" type="submit">Comment</button>
+                        {% endif %}
+                    </form>
+                    <a class="btn btn-light" href="/shop/amendgood/{{good['id']}}">Next Comment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

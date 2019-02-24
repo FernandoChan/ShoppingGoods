@@ -1,0 +1,18 @@
+<li class="nav-item"> <span></span>
+    <a class="nav-link text-light" href="{{ url_for('shop.cart') }}">
+        <img src="https://cdn4.iconfinder.com/data/icons/web-essential-4/64/30-web_essential-128.png" height="27">
+        Cart
+    </a>
+</li>
+<li class="nav-item"> <a class="nav-link text-light" href="{{ url_for('shop.tickets') }}">Orders</a></li>
+<li class="nav-item"> <a class="nav-link text-light" href="{{ url_for('shop.changeuserinfo') }}">Account Setting</a></li>
+{% if g.shopuser and g.shopuser['isadmin']==1 %}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" data-toggle="dropdown" >Manager</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="{{ url_for('shop.configtickets') }}">Configure Orders</a>
+            <a class="dropdown-item" href="{{ url_for('shop.categories') }}">Configure Categories</a>
+            <a class="dropdown-item" href="{{ url_for('shop.addgood') }}">Add Goods</a>
+        </div>
+</li>
+{% endif %}
