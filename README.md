@@ -1,5 +1,5 @@
 # nut_cloud
-
+2018Fall Database Course Project
 This package uses flask to create a simple website which uses sqlite3 as the backend database.
 
 ## Feature
