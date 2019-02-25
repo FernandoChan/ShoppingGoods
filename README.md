@@ -28,6 +28,11 @@ Powershell:
 $env:FLASK_APP="nut_cloud"
 $env:FLASK_ENV="development"
 ```
+CLI:
+```
+export FLASK_APP=nut-cloud
+export FLASK_ENV=development
+```
 4. `flask init-db`
 5. `flask run`
 
